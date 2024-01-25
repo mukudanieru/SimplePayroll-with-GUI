@@ -1,7 +1,9 @@
 package payroll;
 
+import payroll.employees.HourlyEmployee;
 import payroll.employees.SalariedEmployee;
 import payroll.interfaces.EmployeeSimulator;
+import payroll.interfaces.HourlyEmpSim;
 import payroll.interfaces.SalariedEmpSim;
 
 /**
@@ -77,7 +79,40 @@ public class Main {
     }
 
     private static int getHourlyEmp() {
-        return 1;
+        HourlyEmpSim hourlyEmpSim = new HourlyEmpSim();
+
+        String name = hourlyEmpSim.getName();
+
+        if (name == null) {
+            return -1;
+        }
+
+        String jobTitle = hourlyEmpSim.getJobTitle();
+
+        if (jobTitle == null) {
+            return -1;
+        }
+
+        double tax = hourlyEmpSim.getTax();
+
+        if (tax == -1) {
+            return -1;
+        }
+
+        double hourlyRate = hourlyEmpSim.getHourlyRate();
+
+        if (hourlyRate == -1) {
+            return -1;
+        }
+
+        double workHours = hourlyEmpSim.getWorkHours();
+
+        if (workHours == -1) {
+            return -1;
+        }
+
+        return EmployeeSimulator.displayInformation(new HourlyEmployee(name, jobTitle, tax, hourlyRate, workHours));
+
     }
 
     private static int getCommissionedEmp() {
