@@ -1,5 +1,7 @@
 package payroll.interfaces;
 
+import payroll.employees.HourlyEmployee;
+
 import javax.swing.*;
 
 public class HourlyEmpSim extends EmployeeSimulator {
@@ -37,34 +39,38 @@ public class HourlyEmpSim extends EmployeeSimulator {
     }
 
     public double getWorkHours() {
-        double workHours;
+        double totalHours = 0;
 
-        while (true) {
-            String input = JOptionPane.showInputDialog("Enter Work Hours: ");
+        for (int i = 0; i < HourlyEmployee.WORKDAYS; i++) {
 
-            if (input == null) {
-                return -1; // Error handling for cancellation
-            }
+            while (true) {
+                String input = JOptionPane.showInputDialog(String.format("Work hours for Day %d: ", i + 1));
 
-            try {
-                workHours = Double.parseDouble(input);
-
-                if (workHours >= 0) {
-                    break;
+                if (input == null) {
+                    return -1; // Error handling for cancellation
                 }
 
-                JOptionPane.showMessageDialog(null,
-                        "Invalid input. Work hours must be a non-negative value.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Invalid input. Please enter a valid numeric value for work hours.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                try {
+                    totalHours += Double.parseDouble(input);
+
+                    if (totalHours >= 0) {
+                        break;
+                    }
+
+                    JOptionPane.showMessageDialog(null,
+                            "Invalid input. Work hours must be a non-negative value.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null,
+                            "Invalid input. Please enter a valid numeric value for work hours.", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
             }
 
         }
 
-        return workHours;
+        return totalHours;
     }
 
 }

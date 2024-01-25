@@ -1,7 +1,9 @@
 package payroll;
 
+import payroll.employees.CommissionedEmployee;
 import payroll.employees.HourlyEmployee;
 import payroll.employees.SalariedEmployee;
+import payroll.interfaces.CommissionedEmpSim;
 import payroll.interfaces.EmployeeSimulator;
 import payroll.interfaces.HourlyEmpSim;
 import payroll.interfaces.SalariedEmpSim;
@@ -116,6 +118,45 @@ public class Main {
     }
 
     private static int getCommissionedEmp() {
-        return 1;
+        CommissionedEmpSim commissionedEmpSim = new CommissionedEmpSim();
+
+        String name = commissionedEmpSim.getName();
+
+        if (name == null) {
+            return -1;
+        }
+
+        String jobTitle = commissionedEmpSim.getJobTitle();
+
+        if (jobTitle == null) {
+            return -1;
+        }
+
+        double tax = commissionedEmpSim.getTax();
+
+        if (tax == -1) {
+            return -1;
+        }
+
+        double commissionPercent = commissionedEmpSim.getCommissionPercent();
+
+        if (commissionPercent == -1) {
+            return -1;
+        }
+
+        int numberOfSales = commissionedEmpSim.getNumberOfSales();
+
+        if (numberOfSales == -1) {
+            return -1;
+        }
+
+        double[] sales = commissionedEmpSim.getSales(numberOfSales);
+
+        if (sales == null) {
+            return -1;
+        }
+
+        return EmployeeSimulator.displayInformation(new CommissionedEmployee(name, jobTitle, tax,
+                commissionPercent, numberOfSales, sales));
     }
 }
