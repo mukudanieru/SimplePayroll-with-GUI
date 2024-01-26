@@ -27,7 +27,7 @@ public class SalariedEmpSim extends EmployeeSimulator {
                         "Error", JOptionPane.ERROR_MESSAGE);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null,
-                        "Invalid input. Please enter a valid numeric value for tax", "Error",
+                        "Invalid input. Please enter a valid numeric value for salary", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
 
