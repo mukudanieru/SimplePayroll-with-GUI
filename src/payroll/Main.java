@@ -1,7 +1,11 @@
 package payroll;
 
+import payroll.employees.CommissionedEmployee;
+import payroll.employees.HourlyEmployee;
 import payroll.employees.SalariedEmployee;
+import payroll.interfaces.CommissionedEmpSim;
 import payroll.interfaces.EmployeeSimulator;
+import payroll.interfaces.HourlyEmpSim;
 import payroll.interfaces.SalariedEmpSim;
 
 /**
@@ -77,10 +81,82 @@ public class Main {
     }
 
     private static int getHourlyEmp() {
-        return 1;
+        HourlyEmpSim hourlyEmpSim = new HourlyEmpSim();
+
+        String name = hourlyEmpSim.getName();
+
+        if (name == null) {
+            return -1;
+        }
+
+        String jobTitle = hourlyEmpSim.getJobTitle();
+
+        if (jobTitle == null) {
+            return -1;
+        }
+
+        double tax = hourlyEmpSim.getTax();
+
+        if (tax == -1) {
+            return -1;
+        }
+
+        double hourlyRate = hourlyEmpSim.getHourlyRate();
+
+        if (hourlyRate == -1) {
+            return -1;
+        }
+
+        double workHours = hourlyEmpSim.getWorkHours();
+
+        if (workHours == -1) {
+            return -1;
+        }
+
+        return EmployeeSimulator.displayInformation(new HourlyEmployee(name, jobTitle, tax, hourlyRate, workHours));
+
     }
 
     private static int getCommissionedEmp() {
-        return 1;
+        CommissionedEmpSim commissionedEmpSim = new CommissionedEmpSim();
+
+        String name = commissionedEmpSim.getName();
+
+        if (name == null) {
+            return -1;
+        }
+
+        String jobTitle = commissionedEmpSim.getJobTitle();
+
+        if (jobTitle == null) {
+            return -1;
+        }
+
+        double tax = commissionedEmpSim.getTax();
+
+        if (tax == -1) {
+            return -1;
+        }
+
+        double commissionPercent = commissionedEmpSim.getCommissionPercent();
+
+        if (commissionPercent == -1) {
+            return -1;
+        }
+
+        int numberOfSales = commissionedEmpSim.getNumberOfSales();
+
+        if (numberOfSales == -1) {
+            return -1;
+        }
+
+        double[] sales = commissionedEmpSim.getSales(numberOfSales);
+
+        if (sales == null) {
+            return -1;
+        }
+
+        return EmployeeSimulator.displayInformation(new CommissionedEmployee(name, jobTitle, tax,
+                commissionPercent, numberOfSales, sales));
     }
 }

@@ -13,7 +13,7 @@ public class CommissionedEmployee extends Employee {
     String name, String jobTitle, double tax,
     double commissionedPercent, int numberOfSales, double sales[]) {
         super(name, jobTitle, tax);
-        this.commissionedPercent = commissionedPercent;
+        this.commissionedPercent = commissionedPercent / 100;
         this.numberOfSales = numberOfSales;
         this.sales = sales;
     }
