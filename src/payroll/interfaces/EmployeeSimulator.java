@@ -1,12 +1,20 @@
 package payroll.interfaces;
 
-
 import payroll.employees.Employee;
 import javax.swing.*;
 
+/**
+ * Abstract class implementing the EmpSimulator interface to simulate employee data.
+ */
 public abstract class EmployeeSimulator implements EmpSimulator {
     public EmployeeSimulator() {}
 
+    /**
+     * Displays a welcome message to the user.
+     * @return The user's choice (index of the selected option).
+     * if user's choice == 1 { THE APP WILL CONTINUE }
+     * else (which is just -1) { THE APP WILL BE TERMINATED }
+     */
     public static int greet() {
         ImageIcon icon = new ImageIcon("src/payroll/interfaces/icon.png");
         String[] opt = {"OK"};
@@ -17,6 +25,10 @@ public abstract class EmployeeSimulator implements EmpSimulator {
                 JOptionPane.PLAIN_MESSAGE, icon, opt, null);
     }
 
+    /**
+     * Displays a dialog to prompt the user to select an employee type.
+     * @return The user's choice (index of the selected option).
+     */
     public static int choice() {
         String[] options = {"Salaried", "Hourly", "Commissioned"};
 
@@ -27,12 +39,24 @@ public abstract class EmployeeSimulator implements EmpSimulator {
                 options, null);
     }
 
+    /**
+     * Displays information about the given employee.
+     * @param emp The employee object to display information for.
+     * @return The user's choice (index of the selected option).
+     */
     public static int displayInformation(Employee emp) {
         String[] options = {"Retry", "Exit"};
+
+        // if choice == 0 then the app will continue
+        // if choice == 1 then the app will be terminated
         return JOptionPane.showOptionDialog(null, emp, EmployeeSimulator.TITLE,
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
     }
 
+    /**
+     * Retrieves the name of the employee from user input.
+     * @return The name of the employee.
+     */
     @Override
     public String getName() {
         String name;
@@ -41,22 +65,25 @@ public abstract class EmployeeSimulator implements EmpSimulator {
             name = JOptionPane.showInputDialog("Enter Name: ");
 
             if (name == null) {
-                // Erorr handling
-                return null;
+                return null; // User cancelled the input dialog
             }
 
             if (!name.trim().isEmpty()) {
                 break;
             }
 
-            JOptionPane.showMessageDialog(
-                    null, "Invalid input. Please enter a valid name.",
-                    "Invalid Name", JOptionPane.ERROR_MESSAGE);
+            this.raiseError(
+                    "Invalid input. Please enter a valid name.",
+                    "Invalid name!");
         }
 
         return name;
     }
 
+    /**
+     * Retrieves the job title of the employee from user input.
+     * @return The job title of the employee.
+     */
     @Override
     public String getJobTitle() {
         String jobTitle;
@@ -65,22 +92,25 @@ public abstract class EmployeeSimulator implements EmpSimulator {
             jobTitle = JOptionPane.showInputDialog("Enter Job Title: ");
 
             if (jobTitle == null) {
-                // Error handling
-                return null;
+                return null; // User cancelled the input dialog
             }
 
             if (!jobTitle.trim().isEmpty()) {
                 break;
             }
 
-            JOptionPane.showMessageDialog(
-                    null, "Invalid input. Job title cannot be empty.",
-                    "Invalid Job Title", JOptionPane.ERROR_MESSAGE);
+            this.raiseError(
+                    "Invalid input. Job title cannot be empty.",
+                    "Invalid job title!");
         }
 
         return jobTitle;
     }
 
+    /**
+     * Retrieves the tax rate of the employee from user input.
+     * @return The tax rate of the employee.
+     */
     @Override
     public double getTax() {
         double tax;
@@ -89,8 +119,7 @@ public abstract class EmployeeSimulator implements EmpSimulator {
             String input = JOptionPane.showInputDialog("Enter Tax Rate (%): ");
 
             if (input == null) {
-                // Handling the cancellation or closed the
-                return -1;
+                return -1; // User cancelled the input dialog
             }
 
             try {
@@ -100,17 +129,28 @@ public abstract class EmployeeSimulator implements EmpSimulator {
                     break;
                 }
 
-                JOptionPane.showMessageDialog(null,
-                        "Invalid input. Tax rate must be a non-negative value and not more than 100.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                this.raiseError(
+                        "Invalid input. Tax rate must be a non-negative value and not more than 100.",
+                        "Invalid tax rate!");
 
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
+                this.raiseError(
                         "Invalid input. Please enter a valid numeric value for tax.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                        "Invalid tax rate!");
             }
         }
 
         return tax;
+    }
+
+    /**
+     * Displays an error message dialog with the specified message and title.
+     * @param message The error message to display.
+     * @param title The title of the error message dialog.
+     */
+    protected void raiseError(String message, String title) {
+        JOptionPane.showMessageDialog(
+                null, message,title
+                , JOptionPane.ERROR_MESSAGE);
     }
 }

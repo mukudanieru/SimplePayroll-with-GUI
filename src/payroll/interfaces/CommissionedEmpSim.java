@@ -2,14 +2,21 @@ package payroll.interfaces;
 
 import javax.swing.*;
 
+/**
+ * Simulates the data input process for a commissioned employee.
+ */
 public class CommissionedEmpSim extends EmployeeSimulator {
     public CommissionedEmpSim() {}
 
+    /**
+     * Prompts the user to enter the commission percentage.
+     * @return The commission percentage entered by the user.
+     */
     public double getCommissionPercent() {
         double commissionPercent;
 
         while (true) {
-            String input = JOptionPane.showInputDialog("Enter Commission Percentage: ");
+            String input = JOptionPane.showInputDialog("Enter Commission Percentage (%): ");
 
             if (input == null) {
                 return -1;
@@ -22,19 +29,24 @@ public class CommissionedEmpSim extends EmployeeSimulator {
                     break;
                 }
 
-                JOptionPane.showMessageDialog(null, "Invalid input. Commission percentage must be a non-negative value.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                this.raiseError(
+                        "Invalid input. Commission percentage must be a non-negative value.",
+                        "Invalid input for commission percent!");
 
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Invalid input. Please enter a valid numeric value for commission percentage.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                this.raiseError(
+                        "Invalid input. Please enter a valid numeric value for commission percentage.",
+                        "Invalid input for commission percent!");
             }
         }
 
         return commissionPercent;
     }
 
+    /**
+     * Prompts the user to enter the number of sales.
+     * @return The number of sales entered by the user.
+     */
     public int getNumberOfSales() {
         int numberOfSales;
 
@@ -52,28 +64,33 @@ public class CommissionedEmpSim extends EmployeeSimulator {
                     break;
                 }
 
-                JOptionPane.showMessageDialog(null, "Invalid input. Number of sales must be a non-negative value.",
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                this.raiseError(
+                        "Invalid input. Number of sales must be a non-negative value.",
+                        "Invalid number of sales!");
 
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                        "Invalid input. Please enter a valid numeric value for number of sales.", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                this.raiseError(
+                        "Invalid input. Please enter a valid numeric value for number of sales.",
+                        "Invalid input for the number of sales!");
             }
         }
 
         return numberOfSales;
     }
 
+    /**
+     * Prompts the user to enter the sales amounts.
+     * @param numberOfSales The number of sales for which to enter amounts.
+     * @return An array containing the sales amounts entered by the user.
+     */
     public double[] getSales(int numberOfSales) {
         double[] sales = new double[numberOfSales];
 
         for (int i = 0; i < numberOfSales; i++) {
 
-
             while (true) {
 
-                String input = JOptionPane.showInputDialog(String.format("Sale #%d: ", i + 1));
+                String input = JOptionPane.showInputDialog(String.format("Sale #%d: (₱)", i + 1));
 
                 if (input == null) {
                     return null;
@@ -86,13 +103,14 @@ public class CommissionedEmpSim extends EmployeeSimulator {
                         break;
                     }
 
-                    JOptionPane.showMessageDialog(null, "Invalid input. Sale must be a non-negative value.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                    this.raiseError(
+                            "Invalid input. Sale must be a non-negative value.",
+                            "Invalid sale input!");
 
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null,
-                            "Invalid input. Please enter a valid numeric value for sale.", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                    this.raiseError(
+                            "Invalid input. Please enter a valid numeric value for sale.",
+                            "Invalid sale input!");
                 }
 
             }
