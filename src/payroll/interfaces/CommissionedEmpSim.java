@@ -25,12 +25,12 @@ public class CommissionedEmpSim extends EmployeeSimulator {
             try {
                 commissionPercent = Double.parseDouble(input);
 
-                if (commissionPercent >= 0) {
+                if (commissionPercent >= 0 && commissionPercent <= 100) {
                     break;
                 }
 
                 this.raiseError(
-                        "Invalid input. Commission percentage must be a non-negative value.",
+                        "Invalid input. Commission percentage must be a non-negative value and not more than 100.",
                         "Invalid input for commission percent!");
 
             } catch (NumberFormatException e) {
